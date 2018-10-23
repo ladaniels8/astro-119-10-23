@@ -1,0 +1,107 @@
+%matplotlib inline
+import numpy as np 
+import matplotlib.pyplot as plt 
+def function_for_roots(x):
+    a = 1.01 
+    b = -3.04
+    c = 2.07
+    return a*x**2 + b*x + c 
+    def check_initial_values(f, x_min, x_max, tol):
+    
+    #check our intial guesses 
+    y_min = f(x_min)
+    y_max = f(x_max)
+    
+    #check that x_min and x_max contain a zero crossing 
+    if(y_min*_max>=0.0):
+        print("No zero crossing found in the range = ", x_min,x_max)
+        s = "f(%f) = %f, f(%f) = %f" % (x_min,y_min,x_max,y_max)
+        print(s)
+        return 0 
+    #if x_min is a root, then return flag == 1
+    if(np.fabs(y_min)<tol):
+        return 1
+    
+    #if x_max if a root, then return flag == 2
+    if(np.fabs(y_max)<tol):
+        return 2
+        #if we reach this point, the bracket is valid
+    #and we will return 3 
+    return 3
+    def bisection_root_finding(f, x_min_start, x_max_start, tol):
+    #this function uses bisection search to find a root
+    x_min = x_min_start #min x in bracket
+    x_max = x_max_start #max x in bracket
+    x_mid = 0.0 #function value at mid point
+    y_mid = 0.0 #function value at mid point
+    
+    imax = 10000 #set a max number of iteration 
+    i = 0 #iteration counter
+    
+    #check the intial values
+    flag = check_initial_values(f,x_min,x_max,tol)
+    if(flag==0):
+        print("Error in bisection_root_finding().")
+        raise ValueReeor('Intial values invalid', x_min,x_max)
+    elif(flag==1):
+        #lucky guess
+        return x_min
+    elif(lag==2):
+        #another lucky guess
+        return x_max
+    #if we reach here, then we need to conduct the search
+    
+    #set a flag
+    flag = 1
+    
+    #enter a while loop
+    while(flag):
+        x_mid = 0.5*(x_min+x_max) #mid_point
+        y_mid = f(x_mid) #function value at x_mid
+        
+        #ceck of x_mid is a root
+        if(np.fabs(y_mid)<tol):
+            flag = 0 
+        else:
+            #x_mid is not a root
+            #if the product of the function at the midpoint 
+            #and at one of the end points is greater than 
+            #zero, replace this end point
+            if(f(x_min)*f(x_mid)>0):
+                #replace x_min with x_mid
+                x_min = x_mid
+                
+                else:
+                    #replace x_max with x_mid
+                    x_max = x_mid
+                    
+                #print out the iteration
+                print(x_min,f(x_min),x_max,f(x_max))
+        #count the iteration
+        i +=1 
+        
+        #if we have excedded the max number
+        #of iterations, exit
+        if(i>=imax):
+            print("exceeded max numer of iterations = ",i)
+            s = "min bracket f(%f) = %f" % (x_min,f(x_min))
+            print(s)
+            s = "max bracket f(%f) = %f" % (x_max,f(x_max))
+            print(s)
+            raise StopIteration('Stopping iterations after', i)
+            
+        #we are done!
+        return x_mid
+        x_min = 0.0
+x_max = 1.5
+toleance = 1.0e-6 
+
+#print the intial guess
+print(x_min,function_for_roots(x_min))
+print(x_max,function_for_roots(x_max))
+
+x_root = bisection_root_finding(function_for_roots,x_min,x_max,tolerance)
+y_root = function_for_roots(x_root)
+s = "root found with y(%f) - %f" % (x_root,y_root)
+print(s)
+        
